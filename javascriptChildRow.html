@@ -1,0 +1,44 @@
+<script>
+// ***********************  funzione di formattazione delle Child Row *****************************
+/* Formatting function for row details - modify as you need */
+
+function list(d,column) {
+    // `d` is the original data object for the row
+    //var column = 'Immagini'
+     var divChildRow = ''
+    console.log('viewDetail ' + column)
+    
+    switch (column){
+    case "Personale":
+
+        divChildRow = '<table>'+
+                      '<tr>'+
+                        '<td>Personale assegnato: </td>'+'    <td><b>'+d["Totale personale assegnato"]+'</b></td>'+
+                      '</tr>'+
+                      '<tr>'+
+                        '<td>Personale in produzione: </td>'+ '<td><b>'+d["Personale in produzione"]+'</b></td>'+
+                      '</tr>'+
+                      '<tr>'+
+                        '<td>Regola code: </td>'+ '<td><b>'+d["Regola code"]+'</b></td>'+
+                      '</tr>'+
+                      '<tr>'+
+                        '<td>Wi-Fi: </td>'+ '<td><b><em>da definire</em></b></td>'+
+                      '</tr>'+                      
+                    '</table>'
+
+         return divChildRow;
+         break;
+     case "Immagini":
+     var immagini = d["Foto ufficio da allegare "].split(',')     
+     var divChildRow = ''
+     for (var i=0; i<immagini.length; i++){
+                    divChildRow = divChildRow + '<div class="gallery"> <a target="_blank" href="'+ immagini[i] +'"> <img src="'+ immagini[i] +'" alt="immagine ' + (i+1)+ '" width="300" height="200" ></a>'+'</div>'
+                 }
+           return divChildRow;
+           break;
+     default:
+     break;
+    }
+  }
+       
+</script>

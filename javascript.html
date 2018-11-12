@@ -1,0 +1,123 @@
+<script>
+// ****************** FUNZIONE CHE RENDERIZZA LA TABELLA FILTRATA CON IL PLUG_IN DATATABLES ****************************
+    function renderTable(){
+
+       $('#myTb').empty();
+
+        google.script.run
+        .withSuccessHandler(onReadData)
+        .readData()
+    }
+      
+      function onReadData(dataObject){
+      console.log('onReadData ' + JSON.stringify(dataObject))
+      moment.locale('it')
+      // parse necessario se l'oggetto viene restituito come JSON
+      dataObject = JSON.parse(dataObject)
+
+
+      // estrae le proprietà dell'oggetto
+       var keys = [];
+           for(var key in dataObject.table[0]){
+              keys.push(key);
+           }
+       
+       console.log(keys)
+       
+       
+        $(document).ready(function (){
+        
+ 
+        
+        // ******* definisce la variabile "myTb" ***********************
+
+        var myTb = $('#myTb').DataTable({
+        
+        oLanguage : {         
+          sEmptyTable:     "Nessun dato presente nella tabella",
+          sInfo:           "Vista da _START_ a _END_ di _TOTAL_ elementi",
+          sInfoEmpty:      "Vista da 0 a 0 di 0 elementi",
+          sInfoFiltered:   "(filtrati da _MAX_ elementi totali)",
+          sInfoPostFix:    "",
+          sInfoThousands:  ".",
+          sLengthMenu:     "Visualizza _MENU_ elementi",
+          sLoadingRecords: "Caricamento...",
+          sProcessing:     "Elaborazione...",
+          sSearch:         "Cerca:",
+          sZeroRecords:    "La ricerca non ha portato alcun risultato.",
+              oPaginate: {
+                  sFirst:      "Inizio",
+                  sPrevious:   "Precedente",
+                  sNext:       "Successivo",
+                  sLast:       "Fine"
+              },
+            },
+       
+        dom: 'Bfrltip',
+        
+        buttons: [
+        
+               { text: 'Inserisci nuovo utente', action: function (e, dt, node, conf) { window.open('https://docs.google.com/forms/d/e/1FAIpQLSdjr8QZGmOLnMq0MutkHuPYJUxdfAF_g0WHzoA1Uy2EvpbcsQ/viewform', '_blank' );} },
+                'copyHtml5',                                                            
+                'excelHtml5',
+               { extend: 'csvHtml5', text: 'XLS', orientation: 'landscape', alignment: 'center', exportOptions: { columns: [ 0, 1, 2, 3, 4] } },
+               { extend: 'pdfHtml5', text: 'PDF', orientation: 'landscape', alignment: 'center', exportOptions: { columns: [ 0, 1, 2, 3, 4] }, 
+                   styles: { layout: 'lightHorizontalLines', tableHeader:{ fillColor:"#F0F8FF" }, }, },
+                ],
+              
+        columns: [
+        
+/* 00 */          { data: 'Update', title: "Modulo",orderable: false,}, 
+/* 01 */           { data: 'Cognome Nome', title: "Cognome Nome"},
+/* 02 */           { data: 'Sigla', title: "Sigla"},
+/* 03 */           { data: 'Area principale', title: "Area principale"},
+/* 04 */           { data: 'Altre aree di appartenenza', title: "Altre aree di appartenenza"},
+/* 05 */           { data: 'Team', title: "Team" },
+/* 06 */           { data: 'Tematiche e Progetti', title: "Tematiche e Progetti" },
+/* 07 */           { data: 'Sede', title: "Sede"},
+/* 08 */           { data: "Telefono fisso / Interno Ufficio", title: "Telefono fisso / Interno Ufficio"},
+/* 09 */           { data: "Telefono mobile di servizio", title: "Telefono mobile di servizio"},
+/* 10 */           { data: "Nome Santo Patrono", title: "Nome Santo Patrono"},
+/* 11 */           { data: "Data Santo Patrono", title: "Data Santo Patrono", visible:true},
+
+          ],
+          
+        columnDefs: [
+
+        { targets: '_all', visible: true },
+        { targets: [0], render: function ( data, type, row) {
+            if(row.Ruolo == "Viewer"){
+              return '<button class="btn btn-outline btn-info waves-effect disabled">Modifica</button>'; }
+              else return '<a href='+data+' class="btn btn-outline btn-danger waves-effect" target="_blank">Modifica</a>';}
+              },   
+          { targets: [11], render: function ( data, type, row) {
+              return moment(data).format('YYYY/MM/DD')     
+          }
+         },
+  
+         
+        ],
+        
+          data: dataObject.table,
+          responsive: true,
+          scrollCollapse: true,
+          scrollY: "100vh",
+//          scrollX: "100%",
+//          scrollXInner: "110%",
+          paging: true,
+          paginationType: 'full',
+          order: [[ 4, 'desc' ],[ 2, 'asc' ]],
+//          displayLength: 5,
+          lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+          pageLength: 50,
+          autoWidth: true,
+
+ });       // chiusura chiamata alla funzione di definizio della variabile 'myTb'
+})
+}
+
+//$('.bodycontainer').css( 'display', 'block' );
+//table.columns.adjust().draw();
+
+
+</script>

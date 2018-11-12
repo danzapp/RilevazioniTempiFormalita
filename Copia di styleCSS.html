@@ -1,0 +1,150 @@
+<style>
+
+  html{
+      min-height:100%;
+      position: relative;
+  }
+  
+  body {
+      background-image: linear-gradient(toright, #FFFFFF 0%, #AACFEF 100%);
+      background-color: #ffffff;
+      font-family: "Titillium Web";
+      font-weight: 200;
+  }
+
+  p { font-size: 18px; }
+  h1 { font-size: 30px; }
+  
+  th {
+      vertical-align: middle;
+      text-align: center;
+      padding: 15px;
+      
+       }
+
+  .header {
+
+      text-shadow: -2px 0 3px #006;
+      background-color: tomato; <!-- #0066cc; -->
+      
+  }
+  
+  .container {
+
+      display: block;
+      vertical-align: middle;
+      margin: auto;
+      text-align: center; 
+      width: max-container;
+      max-width: 100%;
+      height: auto;
+      max-height: 100%;
+  }
+  
+  #datetimepicker-input {
+      width: auto;
+  }
+
+  footer {
+      background: #e0f2f7;
+  
+      bottom: 1%;
+      text-shadow: -3px 0 4px #006;
+      text-align: center; 
+  }
+  
+  .modal-content.ui-resizable {
+    overflow: scroll;
+    overflow-y: hidden;
+    overflow-x: hidden;
+  }
+</style>
+
+
+  <!-- fixed table header -->
+<style>  
+  
+  /* checkbox aspect */
+   input[type="checkbox"]:not(:checked),
+   input[type="checkbox"]:checked {
+   content: '';
+   position: relative;
+   left:0; top: 2px;
+   width: 12px; height: 12px;
+   border: 1px solid #aaa;
+   background: #f8f8f8;
+   border-radius: 3px;
+   box-shadow: inset 0 1px 3px rgba(0,0,0,0);
+   }
+   
+  /* loader */
+  .glyphicon-refresh-animate {
+     -webkit-animation-name: rotateThis;
+     -webkit-animation-duration: 2s;
+     -webkit-animation-iteration-count: infinite;
+     -webkit-animation-timing-function: linear;
+  }
+  
+  .glyphicon-import-animate {
+     -webkit-animation-name: rotateThis;
+     -webkit-animation-duration: 2s;
+     -webkit-animation-iteration-count: infinite;
+     -webkit-animation-timing-function: linear;
+  }
+</style>
+
+
+<style> 
+    <!-- Datatables Row grouping -->
+       tr.group,
+       tr.group:hover {
+       background-color: #ddd !important;
+       font-weight: bold;
+
+       }
+       
+</style>
+<style>
+
+  /* Table row alternate */
+  table.dataTable tr.odd { background-color: #f0efef; }
+  table.dataTable tr.even { background-color: #FFFFFF; }
+</style>
+<style>  
+
+  th, td {
+            white-space: nowrap;
+          }
+          div.dataTables_wrapper {
+            width: auto;
+            margin: 0 auto;
+          }
+  
+  feedback: {
+            success: 'glyphicon-ok',
+            error: 'glyphicon-remove'
+          }
+</style -->
+
+    <!-- Child Row plugin settings -->
+    <style>  
+       td.details-control {
+       background: url('https://next.datatables.net/examples/resources/details_open.png') no-repeat center center;
+       cursor: pointer;
+       }
+       tr.shown td.details-control {
+       background: url('https://next.datatables.net/examples/resources/details_close.png') no-repeat center center;
+       }  
+        
+       
+       tr.shown td.details-control {
+       width: "20%"; 
+       background: "#cbe368";
+       }
+       tr.shown td.details-control{
+       width: "20%"; 
+       background: "#cbc9a8";
+       }
+       
+  
+    </style>
