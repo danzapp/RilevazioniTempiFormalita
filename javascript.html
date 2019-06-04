@@ -15,7 +15,7 @@
       // parse necessario se l'oggetto viene restituito come JSON
       dataObject = JSON.parse(dataObject)
 
-
+      console.log(dataObject)
       // estrae le proprietà dell'oggetto
        var keys = [];
            for(var key in dataObject.table[0]){
@@ -57,7 +57,7 @@
         
         buttons: [
         
-               { text: 'Inserisci nuovo utente', action: function (e, dt, node, conf) { window.open('https://docs.google.com/forms/d/e/1FAIpQLSdjr8QZGmOLnMq0MutkHuPYJUxdfAF_g0WHzoA1Uy2EvpbcsQ/viewform', '_blank' );} },
+               { text: 'Segnala nuova anomalia', action: function (e, dt, node, conf) { window.open('https://docs.google.com/a/aci.it/forms/d/e/1FAIpQLSc4_XLrcgzHK1lvR3W7XjjqNNtwOBanAVVTJMeD-8Vjbb8cEQ/viewform', '_blank' );} },
                 'copyHtml5',                                                            
                 'excelHtml5',
                { extend: 'csvHtml5', text: 'XLS', orientation: 'landscape', alignment: 'center', exportOptions: { columns: [ 0, 1, 2, 3, 4] } },
@@ -66,36 +66,44 @@
                 ],
               
         columns: [
-        
-/* 00 */          { data: 'Update', title: "Modulo",orderable: false,}, 
-/* 01 */           { data: 'Cognome Nome', title: "Cognome Nome"},
-/* 02 */           { data: 'Sigla', title: "Sigla"},
-/* 03 */           { data: 'Area principale', title: "Area principale"},
-/* 04 */           { data: 'Altre aree di appartenenza', title: "Altre aree di appartenenza"},
-/* 05 */           { data: 'Team', title: "Team" },
-/* 06 */           { data: 'Tematiche e Progetti', title: "Tematiche e Progetti" },
-/* 07 */           { data: 'Sede', title: "Sede"},
-/* 08 */           { data: "Telefono fisso / Interno Ufficio", title: "Telefono fisso / Interno Ufficio"},
-/* 09 */           { data: "Telefono mobile di servizio", title: "Telefono mobile di servizio"},
-/* 10 */           { data: "Nome Santo Patrono", title: "Nome Santo Patrono"},
-/* 11 */           { data: "Data Santo Patrono", title: "Data Santo Patrono", visible:true},
+/* 00 */          { data: 'Ticket', title: "Ticket",orderable: true,},         
+/* 00 */          { data: 'Modulo', title: "Modulo",orderable: false,}, 
+/* 01 */          { data: 'Informazioni cronologiche', title: "Data",visible: false}, 
+/* 02 */           { data: 'Indirizzo email', title: "Indirizzo email"},
+/* 04 */           { data: 'Prodotto', title: "Prodotto"},
+/* 05 */           { data: 'Sezione', title: "Sezione"},
+/* 06 */           { data: 'Codice pratica', title: "Codice praticam" },
+/* 07 */           { data: 'Tipologia documento', title: "Tipologia documento" },
+/* 08 */           { data: 'Data aggiornamento', title: "Data aggiornamento",visible: false},
+/* 09 */           { data: "Descrizione anomalia", title: "Descrizione anomalia",visible: false},
+/* 09 */           { data: "Soluzione desiderata", title: "Soluzione desiderata",visible: false},
+/* 09 */           { data: "Verifica esito", title: "Verifica esito",visible: false},
+                   { data: "Data aggiornamento", title: "Data aggiornamento",visible: false},
+/* 09 */           { data: "Esito AciInformatica", title: "Esito AciInformatica",visible: true},
+/* 09 */           { data: "Descrizione anomalia", title: "Descrizione anomalia",visible: false},
+/* 10 */           { data: "Note", title: "Note",visible: false},
+/* 16 */           { data:  null, title: "Dettagli", className: 'details-control', orderable: false, searchable: true, defaultContent: '' } 
 
           ],
           
         columnDefs: [
 
         { targets: '_all', visible: true },
-        { targets: [0], render: function ( data, type, row) {
-            if(row.Ruolo == "Viewer"){
+        { targets: [1], render: function ( data, type, row) {
+            if(row.Ruolo != "Editor"){
               return '<button class="btn btn-outline btn-info waves-effect disabled">Modifica</button>'; }
               else return '<a href='+data+' class="btn btn-outline btn-danger waves-effect" target="_blank">Modifica</a>';}
-              },   
-          { targets: [11], render: function ( data, type, row) {
-              return moment(data).format('YYYY/MM/DD')     
-          }
+              },
+         { targets: [2], render: function ( data, type, row){   
+              return moment(data).format('DD/MM/YYYY')}    
+         }, 
+         { targets: [8], render: function ( data, type, row){   
+              return moment(data).format('DD/MM/YYYY')}    
          },
-  
-         
+         { targets: [16], render: function ( data, type, row) {
+               return '<i class="material-icons">view_headline</i>';
+             }
+          },      
         ],
         
           data: dataObject.table,
@@ -109,15 +117,47 @@
           order: [[ 4, 'desc' ],[ 2, 'asc' ]],
 //          displayLength: 5,
           lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-          pageLength: 50,
+          pageLength: 25,
           autoWidth: true,
+                 
+       }); // chiusura chiamata alla funzione di definizio della variabile 'myTb'
+      
 
- });       // chiusura chiamata alla funzione di definizio della variabile 'myTb'
-})
-}
 
 //$('.bodycontainer').css( 'display', 'block' );
 //table.columns.adjust().draw();
-
-
+         // Gestione Pulsante Child Row
+  
+          $('.dataTable').on('click', 'td.details-control', function () {            
+              var classDetails = this.className
+              var tr = $(this).closest('tr');
+              var th = $(this).closest('table').find('th').eq($(this).index());
+              var row = myTb.row( tr );
+              var column = th.text()
+              if (row.child.isShown()) {
+                console.log('row child is alredy shown')
+                this.html = '<i class="material-icons">expand_less</i>'
+         // This row is already open - close it
+              row.child.hide(function(){
+                  this.html = '<i class="material-icons">expand_more</i>'
+                  });
+              tr.removeClass('shown');
+              
+              }
+              else {
+         // Open this row
+              console.log(classDetails)
+              console.log('row child ' + 'of row ' + row.data() + ' is not already shown')
+              
+                  row.child(list(row.data(),column)).show(function(){
+                  this.html = '<i class="material-icons">expand_less</i>'
+                  });
+                  tr.addClass('shown'); 
+               };
+          });    
+    
+         // Fine Gestione Pulsante Child Row
+    });
+}
+ 
 </script>

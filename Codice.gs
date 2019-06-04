@@ -19,39 +19,41 @@ function include(filename) {
 
 function readData(){
 
-var dataMissioni = sheet.getDataRange().getValues()
+var dataAnomalie = sheet.getDataRange().getValues()
 
-// rimuove riga 2 e 3
-dataMissioni.splice(1,2)
 
+// rimuove riga Formule (2)
+dataAnomalie.splice(1,1)
+
+Logger.log(dataAnomalie)
 
 // modifica il formato della data di rilevazione
-var dataObjectsArray = ObjApp.rangeToObjectsNoCamel(dataMissioni) //Object con un Array di Objects
-
-
-
-//Logger.log(dataObjectsArray)
-
-for (var i in dataObjectsArray){
-  Logger.log(i + ' - ' + dataObjectsArray[i]['Regione'])
-}
-
+var dataObjectsArray = ObjApp.rangeToObjectsNoCamel(dataAnomalie) //Object con un Array di Objects
 
 
 // ---------------------------------------------
 // controllo ruolo utente: viewer, editor, owner  
 var currentUser = {}
-currentUser.name = Session.getActiveUser().getEmail()
+currentUser.email = Session.getActiveUser().getEmail()
+//currentUser.email = 'pippo@informatica.aci.it';
+var editors = ['da.zappala@aci,it','informatica.aci.it']
+Logger.log('editors ' + editors);
+  var email = currentUser.email;
+  Logger.log('user email ' + email)
+  Logger.log('index of editors ' + editors.indexOf(email))
+  if (editors.indexOf(email) > -1 || email.split('@')[1] == 'informatica.aci.it') {
+  var isEditor = currentUser.email;
+}
 dataObjectsArray.forEach(function(obj){ 
-
-var editors = ['s.antonielli@aci.it','g.polidori@aci.it','p.rocchetti@aci.it','da.zappala@aci.it', 'c.greblo@aci.it']
+  Logger.log('isEditor ' + isEditor);
+  /*
 for (var i in editors){
-  if (currentUser.name == editors[i]){
-    var isEditor = currentUser.name
+  if (currentUser.email == editors[i]){
+    var isEditor = currentUser.email;
   }
 }
-  
- switch(currentUser.name) {
+*/
+ switch(email) {
     case obj['Indirizzo email']:
         obj.Ruolo = "Editor" 
         currentUser.role = 'Editor'       
@@ -65,8 +67,7 @@ for (var i in editors){
         currentUser.role = 'Viewer'
 }
   
-
-  Logger.log(obj['Ufficio Territoriale'])
+  Logger.log('obj.Ruolo ' + obj['Ruolo'])
   
 })
 

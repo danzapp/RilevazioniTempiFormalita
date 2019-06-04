@@ -1,0 +1,45 @@
+<script>
+// ***********************  funzione di formattazione delle Child Row *****************************
+/* Formatting function for row details - modify as you need */
+
+function list(d,column) {
+    console.log('viewDetail ' + column)
+    console.log('column ' + column);
+    
+    switch (column){
+     case "Dettagli": 
+        var divChildRow = '<table class="table table-responsive">'+             
+                  '<tr>'+              
+                    '<td>Descrizione anomalia:</td>'+
+                    '<td>'+d["Descrizione anomalia"]+'</td>'+
+                  '</tr>'+
+                  '<tr>'+
+                      '<td>Soluzione desiderata:</td>'+
+                      '<td>'+d["Soluzione desiderata"]+'</td>'+
+                  '</tr>'+
+                  '<tr>'+
+                      '<td>Verifica esito:</td>'+
+                      '<td>'+d["Verifica esito"]+'</td>'+
+                  '</tr>'+
+                  '</table>'  
+          console.log('Descrizione anomalia ' + d["Descrizione anomalia"]);
+          var panel = '<div class="panel panel-default"> <br> AciInformatica'+  
+                       '<table class="table table-responsive">'+             
+                       '<tr>'+                
+                         '<td>Esito AciInformatica:</td>'+
+                         '<td>'+d["Esito AciInformatica"]+'</td>'+
+                        '</tr>'+  
+                       '<td>Note:</td>'+
+                         '<td>'+d["Note"]+'</td>'+
+                        '</tr>'+ 
+                        '</table>'+
+                     '<div class="panel-body"></div></div>'
+         return divChildRow + panel;
+         break;    
+     default:
+    }
+  }
+       
+</script>
+
+

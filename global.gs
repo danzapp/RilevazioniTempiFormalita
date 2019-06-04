@@ -1,8 +1,6 @@
-// origine: https://docs.google.com/spreadsheets/d/14_3UOO85IgrQHUTTTMwmocrLkhXORuaTAWlmCy9wsLA/edit
+// origine: https://docs.google.com/spreadsheets/d/1XxtSVw6R988MgQFcNrmsB_UxGLW6nP4jCSPWxyRx3XE/edit
 
 
-// ss = SpreadsheetApp.openById('14_3UOO85IgrQHUTTTMwmocrLkhXORuaTAWlmCy9wsLA')
-ss = SpreadsheetApp.openById('14_3UOO85IgrQHUTTTMwmocrLkhXORuaTAWlmCy9wsLA')
-//sheetname = 'semplificauto Rilevazioni'
-sheetname = 'Personale'
+ss = SpreadsheetApp.openById('1XxtSVw6R988MgQFcNrmsB_UxGLW6nP4jCSPWxyRx3XE')
+sheetname = 'Anomalie in esercizio'
 sheet = ss.getSheetByName(sheetname)
